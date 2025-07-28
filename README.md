@@ -1,105 +1,112 @@
-📊 Segmentation de Clients - Clustering sur Données de Cartes de Crédit
-Ce projet applique des techniques de machine learning non supervisé (clustering) pour segmenter les détenteurs de cartes de crédit à partir d’un jeu de données issu de Kaggle. Il s'agit de regrouper les clients selon leurs comportements d'utilisation (achats, paiements, limites de crédit, etc.) afin d'aider à définir une stratégie marketing ciblée.
+# 📊 Segmentation de Clients - Clustering sur Données de Cartes de Crédit
 
-📁 Contexte du Projet
-L'objectif est de développer une segmentation client en exploitant les données comportementales de 9000 utilisateurs actifs de cartes de crédit sur une période de 6 mois. Le projet suit une approche pas à pas :
+Ce projet applique des techniques de machine learning non supervisé (clustering) pour segmenter les détenteurs de cartes de crédit à partir d’un jeu de données issu de [Kaggle](https://www.kaggle.com).  
+Il s'agit de regrouper les clients selon leurs comportements d'utilisation (achats, paiements, limites de crédit, etc.) afin d'aider à définir une stratégie marketing ciblée.
 
-Exploration de données
+---
 
-Prétraitement (nettoyage, normalisation…)
+## 📁 Contexte du Projet
 
-Clustering hiérarchique (2 features)
+L'objectif est de développer une **segmentation client** en exploitant les données comportementales de **9000 utilisateurs actifs** de cartes de crédit sur une période de 6 mois.  
+Le projet suit une approche pas à pas :
 
-Clustering K-means
+- 🔍 Exploration de données  
+- 🧹 Prétraitement (nettoyage, normalisation…)  
+- 📊 Clustering hiérarchique (2 features)  
+- 🔁 Clustering K-means  
+- 📈 Choix optimal du nombre de clusters (méthode du coude)  
+- 🧠 Interprétation des résultats  
 
-Choix optimal du nombre de clusters (méthode du coude)
+---
 
-Interprétation des résultats
+## 📌 Source du Dataset
 
-📌 Source du Dataset
-Dataset original : Kaggle
-Aperçu du dataset :
+- **Dataset original** : [Kaggle - Credit Card Dataset for Clustering](https://www.kaggle.com/datasets/arjunbhasin2013/ccdata)  
+- **Fichier utilisé** : `CC_GENERAL.csv`
 
+---
 
-🧾 Description des colonnes principales
-Colonne	Description
-CUST_ID	ID client unique (catégorique, à supprimer pour le clustering)
-BALANCE_FREQUENCY	Fréquence de mise à jour du solde (0 à 1)
-PURCHASES	Montant total des achats
-CASH_ADVANCE	Avances d’argent obtenues par le client
-CREDIT_LIMIT	Limite de crédit autorisée
-PAYMENTS	Montant total des paiements effectués
+## 🧾 Description des Colonnes Principales
 
-🧪 Librairies utilisées
-pandas, numpy : Manipulation des données
+| Colonne             | Description                                                   |
+|---------------------|---------------------------------------------------------------|
+| `CUST_ID`           | ID client unique (catégorique, à supprimer pour le clustering)|
+| `BALANCE_FREQUENCY`| Fréquence de mise à jour du solde (0 à 1)                      |
+| `PURCHASES`         | Montant total des achats                                      |
+| `CASH_ADVANCE`      | Avances d’argent obtenues par le client                       |
+| `CREDIT_LIMIT`      | Limite de crédit autorisée                                    |
+| `PAYMENTS`          | Montant total des paiements effectués                         |
 
-matplotlib, seaborn : Visualisation
+---
 
-sklearn.preprocessing.StandardScaler : Normalisation
+## 🧪 Librairies Utilisées
 
-sklearn.cluster.KMeans, AgglomerativeClustering : Clustering
+- `pandas`, `numpy` : Manipulation des données  
+- `matplotlib`, `seaborn` : Visualisation  
+- `sklearn.preprocessing.StandardScaler` : Normalisation  
+- `sklearn.cluster.KMeans`, `AgglomerativeClustering` : Clustering  
+- `scipy.cluster.hierarchy` : Dendrogramme pour clustering hiérarchique  
 
-scipy.cluster.hierarchy : Dendrogramme pour hiérarchique
+---
 
-⚙️ Étapes de traitement
-1. 💾 Chargement et exploration des données
-Chargement avec pandas
+## ⚙️ Étapes de Traitement
 
-Inspection des types, valeurs nulles, statistiques descriptives
+### 1. 💾 Chargement & Exploration des Données
 
-Suppression de la colonne CUST_ID
+- Chargement avec `pandas`  
+- Inspection des types de données, valeurs nulles, statistiques descriptives  
+- Suppression de la colonne `CUST_ID`
 
-2. 🧹 Nettoyage
-Détection de valeurs manquantes
+### 2. 🧹 Nettoyage
 
-Remplacement de la seule valeur manquante (CREDIT_LIMIT) par la moyenne
+- Détection de valeurs manquantes  
+- Remplacement de la seule valeur manquante (`CREDIT_LIMIT`) par la **moyenne**  
 
-3. 📏 Normalisation
-Utilisation de StandardScaler pour standardiser toutes les colonnes (moyenne 0, écart-type 1)
+### 3. 📏 Normalisation
 
-4. 🔗 Clustering hiérarchique
-Sélection de deux features : PURCHASES et CREDIT_LIMIT
+- Utilisation de `StandardScaler` pour standardiser toutes les colonnes  
+  (moyenne = 0, écart-type = 1)
 
-Visualisation du dendrogramme (méthode ward)
+### 4. 🔗 Clustering Hiérarchique
 
-Application de AgglomerativeClustering avec 4 clusters
+- Sélection de deux features : `PURCHASES` et `CREDIT_LIMIT`  
+- Visualisation du **dendrogramme** (méthode = `ward`)  
+- Application de `AgglomerativeClustering` avec 4 clusters  
+- Visualisation finale sur un **nuage de points**
 
-Visualisation finale sur un nuage de points
+### 5. 🎯 Clustering K-Means
 
-5. 🎯 K-Means Clustering
-Application de l’algorithme KMeans sur les données normalisées
+- Application de `KMeans` sur les données normalisées  
+- Visualisation avec un **scatterplot**  
+- Détermination du **meilleur K** via la **méthode du coude**  
+  (distorsion vs nombre de clusters)
 
-Visualisation avec un scatterplot
+---
 
-Détermination du meilleur K via la méthode du coude (distorsion vs nombre de clusters)
+## 📈 Résultats & Interprétation
 
-📈 Résultats & Interprétation
-Les clusters montrent des groupes de clients avec des comportements distincts en termes d’achats, d’avances, de paiements et de limite de crédit.
+- Les clusters montrent des **groupes de clients distincts** selon leurs habitudes :
+  - Montant des achats
+  - Utilisation des avances de crédit
+  - Paiements effectués
+  - Limite de crédit
 
-Le modèle peut servir à cibler des offres marketing spécifiques : clients très actifs, clients prudents, utilisateurs de crédits fréquents…
+- Le modèle peut servir à :
+  - Identifier les **clients très actifs**
+  - Distinguer les **clients prudents**
+  - Détecter les **utilisateurs réguliers de crédits**
 
-📂 Structure du Projet
-bash
-Copier
-Modifier
+---
+
+## 📂 Structure du Projet
+
+```bash
 credit-card-clustering/
 │
-├── README.md
-├── credit_card_clustering.ipynb  # Notebook complet
+├── README.md                          # Ce fichier
+├── credit_card_clustering.ipynb      # Notebook complet
 ├── data/
-│   └── CC_GENERAL.csv            # Dataset (à télécharger depuis Kaggle)
+│   └── CC_GENERAL.csv                # Dataset (à télécharger depuis Kaggle)
 ├── images/
-│   ├── dendrogram.png
-│   └── elbow_curve.png
-🚀 Pour commencer
-Télécharger le dataset ici
-
-Placer le fichier CC_GENERAL.csv dans le dossier data/
-
-Lancer le notebook credit_card_clustering.ipynb
-
-📚 Mots clés
-Clustering, KMeans, Hierarchical Clustering, Standardisation, Segmentation client, Machine Learning, Python, scikit-learn, Credit Card Dataset
-
-🙌 Auteur
-Projet réalisé par [Cheikh Niang] dans le cadre d’un exercice de machine learning non supervisé.
+│   ├── dendrogram.png                # Visualisation du clustering hiérarchique
+│   └── elbow_curve.png               # Méthode du coude
